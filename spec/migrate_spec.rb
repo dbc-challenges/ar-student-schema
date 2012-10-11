@@ -1,4 +1,4 @@
-require_relative '../app/schema'
+require_relative '../app/migrate'
 
 
 describe Schema, "#recreate" do

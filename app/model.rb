@@ -1,3 +1,1 @@
-class Student < ActiveRecord::Base
-  # implement your Student model here
-end
+# implement your Student model here
