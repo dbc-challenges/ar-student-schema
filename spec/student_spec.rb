@@ -1,11 +1,13 @@
 require 'rspec'
 require 'date'
+require_relative '../app/migrate'
 require_relative '../app/student'
 
 
 describe Student, "#name and #age" do
 
   before(:all) do
+    Migrate::recreate
     @student = Student.new
     @student.assign_attributes(
       :first_name => "Happy",
@@ -38,7 +40,7 @@ describe Student, "validations" do
   # Phone numbers must contain at least 10 digits, excluding non-numeric characters.
 
   before(:all) do
-    Student.delete_all
+    Migrate::recreate
   end
 
   before(:each) do

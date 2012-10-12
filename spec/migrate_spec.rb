@@ -2,10 +2,10 @@ require 'rspec'
 require_relative '../app/migrate'
 
 
-describe Schema, "#recreate" do
+describe Migrate, "#recreate" do
 
   it "should have a Students table" do
-    Schema::recreate
+    Migrate::recreate
     ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
 
@@ -23,10 +23,10 @@ describe Schema, "#recreate" do
 
 end
 
-describe Schema, "#drop" do
+describe Migrate, "#drop" do
 
   it "shouldn't have a Students table" do
-    Schema::drop
+    Migrate::drop
     ActiveRecord::Base.connection.table_exists?(:students).should be_false
   end
 
