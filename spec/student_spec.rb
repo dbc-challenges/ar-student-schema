@@ -35,10 +35,6 @@ end
 
 describe Student, "validations" do
 
-  # Email addresses must contain at least one @ character and one . character, with at least one character before the @, one character between the @ and first ., and at least two characters after the final ..
-  # Students must be at least 5 years old.
-  # Phone numbers must contain at least 10 digits, excluding non-numeric characters.
-
   before(:all) do
     Migrate::recreate
   end
@@ -50,7 +46,7 @@ describe Student, "validations" do
       :last_name => "Shawn",
       :birthday => Date.new(1989,9,24),
       :gender => 'female',
-      :email => 'kreayshawn@oaklandrappers.net',
+      :email => 'kreayshawn@oaklandhiphop.net',
       :phone => '(510) 555-1212 x4567'
     )
   end
@@ -78,17 +74,41 @@ describe Student, "validations" do
     @student.should_not be_valid
   end
 
-  it "shouldn't accept invalid phone numbers" do
-    @student.assign_attributes(:phone => '347-8901')
-    @student.should_not be_valid
-  end
-
   it "shouldn't allow two students with the same email" do
     another_student = Student.create!(
       :birthday => @student.birthday,
       :email => @student.email,
       :phone => @student.phone
     )
+    @student.should_not be_valid
+  end
+
+end
+
+describe Student, "advanced validations" do
+
+  before(:all) do
+    Migrate::recreate
+  end
+
+  before(:each) do
+    @student = Student.new
+    @student.assign_attributes(
+      :first_name => "Kreay",
+      :last_name => "Shawn",
+      :birthday => Date.new(1989,9,24),
+      :gender => 'female',
+      :email => 'kreayshawn@oaklandhiphop.net',
+      :phone => '(510) 555-1212 x4567'
+    )
+  end
+
+  it "should accept valid info" do
+    @student.should be_valid
+  end
+
+  it "shouldn't accept invalid phone numbers" do
+    @student.assign_attributes(:phone => '347-8901')
     @student.should_not be_valid
   end
 
