@@ -3,10 +3,10 @@ Dir[File.dirname(__FILE__) + '/../db/migrate/*.rb'].each do |f|
   require_relative f.chomp(File.extname(f))
 end
 
-describe CreateStudents, "#up" do
+describe CreateStudents, "#migrate(:up)" do
 
   it "should have a Students table" do
-    CreateStudents.new.up
+    CreateStudents.new.migrate(:up)
     ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
 
@@ -25,10 +25,10 @@ describe CreateStudents, "#up" do
 end
 
 
-describe CreateStudents, "#down" do
+describe CreateStudents, "#migrate(:down)" do
 
   it "shouldn't have a Students table" do
-    CreateStudents.new.down
+    CreateStudents.new.migrate(:down)
     ActiveRecord::Base.connection.table_exists?(:students).should be_false
   end
 
