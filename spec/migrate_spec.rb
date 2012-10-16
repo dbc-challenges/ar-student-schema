@@ -1,12 +1,19 @@
+require 'rake'
 require 'rspec'
-Dir[File.dirname(__FILE__) + '/../db/migrate/*.rb'].each do |f|
-  require_relative f.chomp(File.extname(f))
-end
+# Dir[File.dirname(__FILE__) + '/../db/migrate/*.rb'].each do |f|
+#   require_relative f.chomp(File.extname(f))
+# end
 
-describe CreateStudents, "#migrate(:up)" do
+
+describe "db:migrate" do
+  before(:all) do
+    Rake.application = Rake::Application.new
+    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
+    Rake.application.load_imports
+  end
 
   it "should have a Students table" do
-    CreateStudents.new.migrate(:up)
+    Rake::Task["db:migrate"].invoke
     ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
 
@@ -21,15 +28,19 @@ describe CreateStudents, "#migrate(:up)" do
       expected[col.type].include?(col.name).should be_true
     end
   end
-
 end
 
 
-describe CreateStudents, "#migrate(:down)" do
-
-  it "shouldn't have a Students table" do
-    CreateStudents.new.migrate(:down)
-    ActiveRecord::Base.connection.table_exists?(:students).should be_false
+describe "db:migrate VERSION=-1" do
+  before(:all) do
+    Rake.application = Rake::Application.new
+    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
+    Rake.application.load_imports
+    ENV['VERSION'] = '-1'
   end
 
+  it "shouldn't have a Students table" do
+    Rake::Task["db:migrate"].invoke
+    ActiveRecord::Base.connection.table_exists?(:students).should be_false
+  end
 end

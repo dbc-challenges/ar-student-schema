@@ -22,6 +22,11 @@ task "db:migrate" do
   end
 end
 
+desc 'Retrieves the current schema version number'
+task :version => [:environment, :load_config] do
+  puts "Current version: #{ActiveRecord::Migrator.current_version}"
+end
+
 desc "Run the specs"
 RSpec::Core::RakeTask.new(:specs)
 

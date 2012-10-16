@@ -7,10 +7,14 @@ require_relative '../app/models/student'
 describe Student, "#name and #age" do
 
   before(:all) do
-    CreateStudents.new do |cs|
-      cs.migrate(:down)
-      cs.migrate(:up)
-    end
+    Rake.application = Rake::Application.new
+    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
+    Rake.application.load_imports
+    ENV["VERSION"] = '0'
+    Rake::Task["db:migrate"].invoke
+    ENV.delete("VERSION")
+    Rake::Task["db:migrate"].invoke
+
     @student = Student.new
     @student.assign_attributes(
       :first_name => "Happy",
@@ -39,10 +43,13 @@ end
 describe Student, "validations" do
 
   before(:all) do
-    CreateStudents.new do |cs|
-      cs.migrate(:down)
-      cs.migrate(:up)
-    end
+    Rake.application = Rake::Application.new
+    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
+    Rake.application.load_imports
+    ENV["VERSION"] = '0'
+    Rake::Task["db:migrate"].invoke
+    ENV.delete("VERSION")
+    Rake::Task["db:migrate"].invoke
   end
 
   before(:each) do
@@ -94,10 +101,13 @@ end
 describe Student, "advanced validations" do
 
   before(:all) do
-    CreateStudents.new do |cs|
-      cs.migrate(:down)
-      cs.migrate(:up)
-    end
+    Rake.application = Rake::Application.new
+    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
+    Rake.application.load_imports
+    ENV["VERSION"] = '0'
+    Rake::Task["db:migrate"].invoke
+    ENV.delete("VERSION")
+    Rake::Task["db:migrate"].invoke
   end
 
   before(:each) do
