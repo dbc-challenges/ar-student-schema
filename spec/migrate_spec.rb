@@ -1,11 +1,12 @@
 require 'rspec'
-require_relative '../app/migrate'
+Dir[File.dirname(__FILE__) + '/../db/migrate/*.rb'].each do |f|
+  require_relative f.chomp(File.extname(f))
+end
 
-
-describe Migrate, "#recreate" do
+describe CreateStudents, "#up" do
 
   it "should have a Students table" do
-    Migrate::recreate
+    CreateStudents.new.up
     ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
 
@@ -23,10 +24,11 @@ describe Migrate, "#recreate" do
 
 end
 
-describe Migrate, "#drop" do
+
+describe CreateStudents, "#down" do
 
   it "shouldn't have a Students table" do
-    Migrate::drop
+    CreateStudents.new.down
     ActiveRecord::Base.connection.table_exists?(:students).should be_false
   end
 
