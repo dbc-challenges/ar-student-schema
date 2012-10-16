@@ -1,13 +1,16 @@
 require 'rspec'
 require 'date'
-require_relative '../app/migrate'
-require_relative '../app/student'
+require_relative '../db/migrate/20121011144238_create_students'
+require_relative '../app/models/student'
 
 
 describe Student, "#name and #age" do
 
   before(:all) do
-    Migrate::recreate
+    CreateStudents.new do |cs|
+      cs.migrate(:down)
+      cs.migrate(:up)
+    end
     @student = Student.new
     @student.assign_attributes(
       :first_name => "Happy",
@@ -36,7 +39,10 @@ end
 describe Student, "validations" do
 
   before(:all) do
-    Migrate::recreate
+    CreateStudents.new do |cs|
+      cs.migrate(:down)
+      cs.migrate(:up)
+    end
   end
 
   before(:each) do
@@ -88,7 +94,10 @@ end
 describe Student, "advanced validations" do
 
   before(:all) do
-    Migrate::recreate
+    CreateStudents.new do |cs|
+      cs.migrate(:down)
+      cs.migrate(:up)
+    end
   end
 
   before(:each) do
