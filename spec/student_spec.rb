@@ -1,19 +1,12 @@
 require 'rspec'
 require 'date'
-require_relative '../db/migrate/20121011144238_create_students'
 require_relative '../app/models/student'
 
 
 describe Student, "#name and #age" do
 
   before(:all) do
-    Rake.application = Rake::Application.new
-    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
-    Rake.application.load_imports
-    ENV["VERSION"] = '0'
-    Rake::Task["db:migrate"].invoke
-    ENV.delete("VERSION")
-    Rake::Task["db:migrate"].invoke
+    raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
 
     @student = Student.new
     @student.assign_attributes(
@@ -43,13 +36,7 @@ end
 describe Student, "validations" do
 
   before(:all) do
-    Rake.application = Rake::Application.new
-    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
-    Rake.application.load_imports
-    ENV["VERSION"] = '0'
-    Rake::Task["db:migrate"].invoke
-    ENV.delete("VERSION")
-    Rake::Task["db:migrate"].invoke
+    raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
 
   before(:each) do
@@ -101,13 +88,7 @@ end
 describe Student, "advanced validations" do
 
   before(:all) do
-    Rake.application = Rake::Application.new
-    Rake.application.add_import File.dirname(__FILE__) + "/../Rakefile"
-    Rake.application.load_imports
-    ENV["VERSION"] = '0'
-    Rake::Task["db:migrate"].invoke
-    ENV.delete("VERSION")
-    Rake::Task["db:migrate"].invoke
+    raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
 
   before(:each) do
