@@ -7,6 +7,7 @@ describe Student, "#name and #age" do
 
   before(:all) do
     raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
+    Student.delete_all
 
     @student = Student.new
     @student.assign_attributes(
@@ -37,6 +38,7 @@ describe Student, "validations" do
 
   before(:all) do
     raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
+    Student.delete_all
   end
 
   before(:each) do
@@ -89,6 +91,7 @@ describe Student, "advanced validations" do
 
   before(:all) do
     raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
+    Student.delete_all
   end
 
   before(:each) do
