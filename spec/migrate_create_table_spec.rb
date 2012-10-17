@@ -1,7 +1,7 @@
 require 'rspec'
 
 
-describe "db:migrate" do
+describe "create table with correct schema" do
   before(:all) do
     raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
   end
