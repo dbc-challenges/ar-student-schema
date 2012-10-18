@@ -5,7 +5,7 @@ module StudentsImporter
     field_names = nil
     Student.transaction do
       File.open(filename).each do |line|
-        data = line.split(',')
+        data = line.chomp.split(',')
         if field_names.nil?
           field_names = data
         else
