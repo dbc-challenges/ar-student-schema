@@ -1,3 +1,5 @@
+require_relative '../app/models/student'
+
 module StudentsImporter
   def self.import(filename=File.dirname(__FILE__) + "/../db/data/students.csv")
     field_names = nil
