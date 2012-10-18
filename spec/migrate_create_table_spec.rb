@@ -4,7 +4,7 @@ require_relative '../db/config'
 
 describe "create table with correct schema" do
   before(:all) do
-    raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Base.connection.table_exists?(:students).should be_true
+    raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Migrator.current_version > 0
   end
 
   it "should have a Students table" do
