@@ -15,12 +15,11 @@ class Student < ActiveRecord::Base
   end
 
   def age
-    now = Date.today
-    @age = now.year - birthday.year  - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
+    now.year - birthday.year  - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end 
 
   def sanitized_number
-    @sanitized_number = phone.gsub(/\D/, '').length
+    phone.gsub(/\D/, '').length
   end
 end 
  
