@@ -1,3 +1,10 @@
 require_relative '../../db/config'
 
-# implement your Student model here
+class Student
+  def name
+  end
+
+  def age
+  end
+  
+end
